@@ -1,0 +1,19 @@
+{
+  "name": "windows-it-tech",
+  "version": "1.0.0",
+  "description": "Turn Claude into a senior Windows 11 IT help desk technician. Includes a 3,500+ line troubleshooting Bible across 38 sections, live diagnosis via Windows-MCP, and automated health monitoring via Desktop Commander.",
+  "author": {
+    "name": "LO"
+  },
+  "keywords": [
+    "windows",
+    "troubleshooting",
+    "IT",
+    "help-desk",
+    "powershell",
+    "windows-11",
+    "mcp"
+  ],
+  "repository": "https://github.com/blottters/windows-it-tech-plugin",
+  "license": "MIT"
+}
