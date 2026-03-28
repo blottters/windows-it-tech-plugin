@@ -1,19 +1,26 @@
 {
   "name": "windows-it-tech",
-  "version": "1.0.0",
-  "description": "Turn Claude into a senior Windows 11 IT help desk technician. Includes a 3,500+ line troubleshooting Bible across 38 sections, live diagnosis via Windows-MCP, and automated health monitoring via Desktop Commander.",
+  "version": "2.0.0",
+  "description": "Turn Claude into a senior Windows 11 IT help desk technician. Includes a 3,500+ line troubleshooting Bible across 18 chapters, live diagnosis via Windows-MCP, tiered health scanning, and session-start health nudges.",
   "author": {
-    "name": "LO"
+    "name": "LO",
+    "email": "gavinisbell99@gmail.com"
   },
+  "homepage": "https://github.com/blottters/windows-it-tech-plugin",
+  "repository": "https://github.com/blottters/windows-it-tech-plugin",
+  "license": "MIT",
   "keywords": [
     "windows",
+    "windows-11",
     "troubleshooting",
     "IT",
     "help-desk",
     "powershell",
-    "windows-11",
-    "mcp"
-  ],
-  "repository": "https://github.com/blottters/windows-it-tech-plugin",
-  "license": "MIT"
+    "health-scan",
+    "diagnostics",
+    "mcp",
+    "system-repair",
+    "BSOD",
+    "networking"
+  ]
 }

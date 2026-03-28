@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"$logDir = 'C:\\Users\\gavin\\Documents\\Claude\\Health-Logs'; if (Test-Path (Join-Path $logDir 'latest.txt')) { $lastScan = (Get-Item (Join-Path $logDir 'latest.txt')).LastWriteTime; $daysSince = ((Get-Date) - $lastScan).Days; if ($daysSince -ge 7) { Write-Output \\\"NOTICE: Last health scan was $daysSince days ago. Consider running /windows-it-tech:windows-health-scan\\\" } } else { Write-Output 'NOTICE: No health scan logs found. Consider running /windows-it-tech:windows-health-scan' }\""
+          }
+        ]
+      }
+    ]
+  }
+}
