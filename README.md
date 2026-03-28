@@ -1,19 +1,40 @@
-# Windows IT Tech — Claude Cowork Plugin
+# Windows IT Tech Plugin
 
-A drop-in Claude Cowork plugin that turns Claude into a senior Windows 11 IT help desk technician. Describe any Windows problem and Claude diagnoses it, explains what's broken, and fixes it — with live command execution when Windows-MCP is connected.
+A Claude Cowork plugin that turns Claude into a senior Windows 11 IT help desk technician. Includes a 3,500+ line troubleshooting knowledge base (38 sections), live diagnosis capabilities, and automated health monitoring.
 
-## Install
+## What It Does
 
-Download `windows-it-tech.plugin` from [Releases](https://github.com/blottters/windows-it-tech-plugin/releases) and open it in Claude Desktop. The plugin appears in your Cowork skills automatically.
+When you describe any Windows problem — blue screens, frozen apps, PowerShell broken, Wi-Fi dropping, printer not working, driver issues, update failures, slow boot, audio gone, or literally anything else — this plugin activates and Claude becomes your IT tech.
 
-## What's Included
+Claude will:
+- Route your problem to the right chapter(s) from the knowledge base
+- Run diagnostic commands directly on your machine (with Windows-MCP)
+- Explain what's broken and why
+- Fix it with specific, tested commands
+- Verify the fix worked
 
-- **Skill:** `windows-it-tech` — auto-triggers on any Windows problem keyword
-- **Knowledge Base:** 3,500+ lines across 18 chapter files covering 38 troubleshooting domains
-- **Diagnostic Protocol:** RISEN+ReAct framework — classify, gather context, diagnose, fix, verify, prevent
-- **Chapter Routing:** INDEX.md maps symptoms to chapters; Claude loads only 1-3 relevant chapters per problem (context-efficient)
+## Components
 
-## Coverage
+| Type | Name | Purpose |
+|------|------|---------|
+| Skill | `windows-it-tech` | Core troubleshooting skill with 18 chapter reference files covering all Windows 11 domains |
+| Skill | `windows-health-scan` | Tiered system health scanner — 20 checks across 3 tiers (Quick / Standard / Deep) |
+
+## Required MCP Connectors
+
+This plugin works best with these MCP servers connected in your Cowork session:
+
+### Windows-MCP (required for live diagnosis)
+Provides PowerShell execution, process inspection, registry access, filesystem operations, screenshots, and desktop notifications. Without this, Claude can only give you instructions — with it, Claude runs the commands directly.
+
+**Tools used:** `mcp__Windows-MCP__PowerShell`, `mcp__Windows-MCP__Process`, `mcp__Windows-MCP__Registry`, `mcp__Windows-MCP__FileSystem`, `mcp__Windows-MCP__Screenshot`, `mcp__Windows-MCP__App`, `mcp__Windows-MCP__Clipboard`, `mcp__Windows-MCP__Notification`, `mcp__Windows-MCP__Shortcut`, `mcp__Windows-MCP__Snapshot`, `mcp__Windows-MCP__Click`, `mcp__Windows-MCP__Type`, `mcp__Windows-MCP__Scrape`, `mcp__Windows-MCP__Wait`
+
+### Desktop Commander (optional, for health monitoring)
+Provides process management, file search, and directory operations. Used by the automated health check scheduled task for logging and file operations.
+
+**Tools used:** `mcp__Desktop_Commander__start_process`, `mcp__Desktop_Commander__list_directory`, `mcp__Desktop_Commander__read_file`, `mcp__Desktop_Commander__write_file`
+
+## Knowledge Base Coverage
 
 | Chapter | Topics |
 |---------|--------|
@@ -36,13 +57,24 @@ Download `windows-it-tech.plugin` from [Releases](https://github.com/blottters/w
 | Ch17 | Intune/MDM enrollment and policy |
 | Ch18 | CBS logs, DISM internals, TSS diagnostic toolkit |
 
-## MCP Connectors (Optional but Recommended)
+## Usage
 
-### Windows-MCP — Live Diagnosis
-With Windows-MCP connected, Claude runs PowerShell commands, inspects processes, reads the registry, captures screenshots, and sends desktop notifications directly on your machine. Without it, Claude still gives accurate instructions — you just run the commands yourself.
+### Troubleshooting
+Just describe your Windows problem. The `windows-it-tech` skill auto-triggers on any Windows-related keywords including: cmd, PowerShell, .exe, BSOD, Device Manager, Event Viewer, regedit, services.msc, blue screen, frozen, Wi-Fi, printer, driver, update, boot, audio, Bluetooth, Docker, WSL, Task Scheduler, BitLocker, Group Policy, registry, or any Windows tool name.
 
-### Desktop Commander — File & Process Operations
-Adds process management, file search, and directory operations. Used by the health check automation for logging.
+### Health Scanning
+Say "health check", "system scan", "run diagnostics", or "how's my PC" and the `windows-health-scan` skill activates. Claude asks which tier you want:
+
+**Tier 1 — Quick Scan** (~30 sec, 6 checks)
+Memory/CPU, disk space, critical services, pending reboot, uptime, Defender status.
+
+**Tier 2 — Standard Scan** (~2 min, 12 checks)
+Quick + Windows Update, event log errors, WSL/Docker, startup bloat, driver problems, disk SMART health.
+
+**Tier 3 — Deep Scan** (~5 min, 20 checks)
+Standard + temp bloat, firewall status, failed scheduled tasks, network connectivity, pagefile health, reliability score, certificate expiry, GPU TDR crashes.
+
+Results are logged to `%USERPROFILE%\Documents\Claude\Health-Logs\` and a Windows notification is sent with the summary.
 
 ## Plugin Structure
 
@@ -51,20 +83,19 @@ windows-it-tech-plugin/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── skills/
-│   └── windows-it-tech/
+│   ├── windows-it-tech/
+│   │   ├── SKILL.md
+│   │   └── references/ (18 chapters + INDEX + Appendices)
+│   └── windows-health-scan/
 │       ├── SKILL.md
-│       └── references/
-│           ├── INDEX.md
-│           ├── Ch01-PowerShell.md
-│           ├── ... (18 chapters)
-│           └── Appendices.md
-├── windows-it-tech.plugin    # Packaged plugin file
+│       └── references/health-checks.md (all 20 checks)
+├── windows-it-tech.plugin
 └── README.md
 ```
 
 ## Related
 
-- [Windows-11-Bible](https://github.com/blottters/Windows-11-Bible) — Full repo with monolith file, RISEN+ReAct system prompt, and health check automation
+- [Windows-11-Bible](https://github.com/blottters/Windows-11-Bible) — Full repo with monolith file, RISEN+ReAct system prompt, and health check docs
 
 ## License
 
