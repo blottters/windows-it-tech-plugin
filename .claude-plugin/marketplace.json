@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Windows 11 IT troubleshooting and diagnostics plugins",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "windows-it-tech",
       "source": "./",
       "description": "Senior Windows 11 IT tech — troubleshooting, diagnostics, and tiered health scans with RISEN+ReAct protocol",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "author": {
         "name": "blottters"
       }
